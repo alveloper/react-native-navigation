@@ -4,14 +4,24 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 function HomeScreen({ navigation }) {
+  /*
+  To be able to interact with the screen component, 
+  we need to use navigation.setOptions to define our button 
+  instead of the options prop. 
+  By using navigation.setOptions inside the screen component, 
+  we get access to screen's props, state, context etc.
+  */
+  const [count, setCount] = React.useState(0);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button onPress={() => setCount(c => c + 1)} title="Update count" />
+      ),
+    });
+  }, [navigation]);
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details" 
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
+    <Text>Count: {count}</Text>
   );
 }
 
