@@ -19,10 +19,21 @@ function HomeScreen({ navigation }) {
   );
 }
 
-function DetailScreen() {
+function DetailScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Details Screen</Text>
+      {/*
+      (6) we can change navigate to push. 
+      This allows us to express the intent to add another route regardless of the existing navigation history.
+      Each time you call push we add a new route to the navigation stack.
+      When you call navigate it first tries to find an existing route with that name, 
+      and only pushes a new route if there isn't yet one on the stack.
+      */}
+      <Button 
+        title="Go to Details... again"
+        onPress={() => navigation.push('Details')}
+      />
     </View>
   )
 }
