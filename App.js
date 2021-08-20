@@ -28,14 +28,31 @@ function DetailScreen({ navigation }) {
       This allows us to express the intent to add another route regardless of the existing navigation history.
       Each time you call push we add a new route to the navigation stack.
       When you call navigate it first tries to find an existing route with that name, 
-      and only pushes a new route if there isn't yet one on the stack.
+      and only pushes a new route if there isn't yet one on the stack. 
       */}
-      <Button 
+      <Button
         title="Go to Details... again"
-        onPress={() => navigation.push('Details')}
+        onPress={() => navigation.push("Details")}
+      />
+      {/*
+      (7) Sometimes you'll want to be able to programmatically trigger back button, 
+      and for that you can use navigation.goBack();.
+      Another common requirement is to be able to go back multiple screens -- 
+      for example, if you are several screens deep in a stack 
+      and want to dismiss all of them to go back to the first screen.
+      In this case, we know that we want to go back to Home so we can use navigate('Home')
+      (not push! try that out and see the difference).
+      Another alternative would be navigation.popToTop(), 
+      which goes back to the first screen in the stack.
+      */}
+      <Button title="Go to Home" onPress={() => navigation.navigate("Home")} />
+      <Button title="Go back" onPress={() => navigation.goBack()} />
+      <Button 
+        title="Go back to first screen in stack"
+        onPress={() => navigation.popToTop()}
       />
     </View>
-  )
+  );
 }
 
 /*
