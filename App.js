@@ -33,10 +33,6 @@ function DetailScreen({ navigation }) {
   );
 }
 
-/*
-(3) you may want to render an image in place of the title, or make the title into a button. 
-In these cases you can completely override the component used for the title and provide your own.
-*/ 
 function LogoTitle() {
   return (
     <Image 
@@ -51,53 +47,20 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      {/*
-      (2) We can move the configuration up to the native stack navigator 
-      under the prop screenOptions.
-      Now, any screen that belongs to the StackScreen will have our wonderful branded styles.
-      */}
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          /*
-          (3) this makes image to apply every screen
-          */
-          // headerTitle: props => <LogoTitle {...props} />
-        }}
-      >
-        {/*
-        (1)
-        There are three key properties to use when customizing the style of your header
-        : headerStyle, headerTintColor, and headerTitleStyle.
-
-        headerStyle: 
-        a style object that will be applied to the View that wraps the header. 
-        If you set backgroundColor on it, that will be the color of your header.
-
-        headerTintColor: 
-        the back button and title both use this property as their color. 
-        In the example below, we set the tint color to white (#fff) 
-        so the back button and the header title would be white.
-
-        headerTitleStyle: 
-        if we want to customize the fontFamily, fontWeight and other Text style properties 
-        for the title, we can use this to do it.
-
-        The configuration we set only applies to the home screen; 
-        when we navigate to the details screen, the default styles are back.
-        We'll look at how to share options between screens now.
-        */}
+      <Stack.Navigator>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          // (3) this makes image apply only one screen
-          options={{ headerTitle: props => <LogoTitle {...props} /> }}
+          options={{ 
+            headerTitle: props => <LogoTitle {...props} />,
+            headerRight: ({ navigation }) => (
+              <Button 
+                onPress={() => alert('This is a button!')}
+                title="Info"
+                color="black"
+              />
+            )
+          }}
         />
         <Stack.Screen name="Details" component={DetailScreen} />
       </Stack.Navigator>
