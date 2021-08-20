@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -33,6 +33,19 @@ function DetailScreen({ navigation }) {
   );
 }
 
+/*
+(3) you may want to render an image in place of the title, or make the title into a button. 
+In these cases you can completely override the component used for the title and provide your own.
+*/ 
+function LogoTitle() {
+  return (
+    <Image 
+      style={{ width: 50, height: 50 }}
+      source={require('./assets/favicon.png')}
+    />
+  )
+}
+
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -52,6 +65,10 @@ function App() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
+          /*
+          (3) this makes image to apply every screen
+          */
+          // headerTitle: props => <LogoTitle {...props} />
         }}
       >
         {/*
@@ -79,7 +96,8 @@ function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'My Home' }}
+          // (3) this makes image apply only one screen
+          options={{ headerTitle: props => <LogoTitle {...props} /> }}
         />
         <Stack.Screen name="Details" component={DetailScreen} />
       </Stack.Navigator>
