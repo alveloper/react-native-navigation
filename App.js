@@ -7,10 +7,6 @@ function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home Screen</Text>
-      {/*
-      (5) navigation - the navigation prop is passed in to every screen component in the native stack navigator.
-      navigate('Details') - we call the navigate function with the name of the route that we'd like to move the user to.
-      */}
       <Button
         title="Go to Details" 
         onPress={() => navigation.navigate('Details')}
@@ -23,28 +19,10 @@ function DetailScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Details Screen</Text>
-      {/*
-      (6) we can change navigate to push. 
-      This allows us to express the intent to add another route regardless of the existing navigation history.
-      Each time you call push we add a new route to the navigation stack.
-      When you call navigate it first tries to find an existing route with that name, 
-      and only pushes a new route if there isn't yet one on the stack. 
-      */}
       <Button
         title="Go to Details... again"
         onPress={() => navigation.push("Details")}
       />
-      {/*
-      (7) Sometimes you'll want to be able to programmatically trigger back button, 
-      and for that you can use navigation.goBack();.
-      Another common requirement is to be able to go back multiple screens -- 
-      for example, if you are several screens deep in a stack 
-      and want to dismiss all of them to go back to the first screen.
-      In this case, we know that we want to go back to Home so we can use navigate('Home')
-      (not push! try that out and see the difference).
-      Another alternative would be navigation.popToTop(), 
-      which goes back to the first screen in the stack.
-      */}
       <Button title="Go to Home" onPress={() => navigation.navigate("Home")} />
       <Button title="Go back" onPress={() => navigation.goBack()} />
       <Button 
@@ -55,32 +33,44 @@ function DetailScreen({ navigation }) {
   );
 }
 
-/*
-(1) createNativeStackNavigator is a function that returns an object containing 2 properties: Screen and Navigator.
-The Navigator should contain Screen elements as its children to define the configuration for routes.
-*/
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
-    /*
-    (2) NavigationContainer is a component which manages our navigation tree.
-    This component must wrap all navigators structure.
-    */
     <NavigationContainer>
       <Stack.Navigator>
         {/*
-        (4)  Each screen in the navigator can specify some options for the navigator,
-        such as the title to render in the header.
-        These options can be passed in the options prop for each screen component.
-         */}
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Overview' }} />
-        {/*
-        (3) Now our stack has two routes, a Home route and a Details route. 
-        A route can be specified by using the Screen component. 
-        The Screen component accepts a name prop which corresponds to the name of the route we will use to navigate,
-         and a component prop which corresponds to the component it'll render.
+        (1)
+        There are three key properties to use when customizing the style of your header
+        : headerStyle, headerTintColor, and headerTitleStyle.
+
+        headerStyle: 
+        a style object that will be applied to the View that wraps the header. 
+        If you set backgroundColor on it, that will be the color of your header.
+
+        headerTintColor: 
+        the back button and title both use this property as their color. 
+        In the example below, we set the tint color to white (#fff) 
+        so the back button and the header title would be white.
+
+        headerTitleStyle: 
+        if we want to customize the fontFamily, fontWeight and other Text style properties 
+        for the title, we can use this to do it.
+
+        The configuration we set only applies to the home screen; 
+        when we navigate to the details screen, the default styles are back.
+        We'll look at how to share options between screens now.
         */}
+        <Stack.Screen name="Home" component={HomeScreen} options={{ 
+          title: 'My Home',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
         <Stack.Screen name="Details" component={DetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
