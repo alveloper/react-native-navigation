@@ -38,7 +38,22 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      {/*
+      (2) We can move the configuration up to the native stack navigator 
+      under the prop screenOptions.
+      Now, any screen that belongs to the StackScreen will have our wonderful branded styles.
+      */}
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      >
         {/*
         (1)
         There are three key properties to use when customizing the style of your header
@@ -61,16 +76,11 @@ function App() {
         when we navigate to the details screen, the default styles are back.
         We'll look at how to share options between screens now.
         */}
-        <Stack.Screen name="Home" component={HomeScreen} options={{ 
-          title: 'My Home',
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'My Home' }}
+        />
         <Stack.Screen name="Details" component={DetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
